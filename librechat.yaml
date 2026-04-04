@@ -61,22 +61,6 @@ endpoints:
     summarize: true
     plugins: true
 
-  # ── Deep Research (Perplexity — Step 4) ──
-  custom:
-    - name: "Deep Research"
-      apiKey: "${PERPLEXITY_API_KEY}"
-      baseURL: "https://api.perplexity.ai/"
-      models:
-        default:
-          - "sonar-deep-research"
-          - "sonar-reasoning-pro"
-          - "sonar-pro"
-      titleConvo: true
-      titleModel: "sonar-pro"
-      modelDisplayLabel: "Deep Research"
-      summarize: true
-      iconURL: "https://www.perplexity.ai/favicon.ico"
-
   # ── Agents Endpoint — Artifacts + Code Execution (Step 5/9) ──
   agents:
     capabilities:
@@ -184,12 +168,12 @@ modelSpecs:
         append_current_datetime: true
         thinking: false
 
-    # ── Claude Opus 4.6 — Max Thinking (research) ──
+    # ── Deep Research — Opus 4.6 Max Thinking (replaces Perplexity) ──
     - name: "opus-4-6-research"
-      label: "Claude Opus 4.6 (Research)"
-      description: "Maximum reasoning budget for complex analysis and research"
-      group: "Research"
+      label: "Deep Research (Opus 4.6)"
+      description: "Maximum reasoning + web search for deep research and complex analysis"
       iconURL: "anthropic"
+      showIconInHeader: true
       showIconInMenu: true
       artifacts: true
       webSearch: true
@@ -198,8 +182,9 @@ modelSpecs:
       preset:
         endpoint: "bedrock"
         model: "us.anthropic.claude-opus-4-6-v1"
-        modelLabel: "Claude Opus 4.6 Research"
-        promptPrefix: "You are an expert research assistant. Think deeply, cite sources, and provide comprehensive analysis.\n\nRENDERING RULES — Always follow these:\n\nTABLES → Use markdown tables for any comparison, list of items with properties, or structured data. Always include header row and alignment.\n\nMATH → Use $inline$ for simple expressions. Use $$display$$ for complex equations on their own line.\n\nCODE → Always specify language in code blocks. Never use plain text for code.\n\nARTIFACT RULES:\n- ER DIAGRAMS → Use artifact type: application/vnd.mermaid with erDiagram syntax\n- FLOWCHARTS → Use artifact type: application/vnd.mermaid with graph TD or graph LR\n- SEQUENCE DIAGRAMS → Use artifact type: application/vnd.mermaid with sequenceDiagram\n- SVG GRAPHICS → Use artifact type: image/svg+xml\n- ADVANCED TABLES (>5 cols or >10 rows) → Use artifact type: application/vnd.react\n- INTERACTIVE CHARTS → Use artifact type: application/vnd.react with Recharts\n- ALWAYS include complete code, never truncate, never use placeholders in artifacts"
+        modelLabel: "Deep Research"
+        greeting: "I'm Deep Research mode — powered by Claude Opus 4.6 with maximum reasoning. I'll search the web, think deeply, cite sources, and provide comprehensive analysis. Ask me anything complex."
+        promptPrefix: "You are a deep research assistant with maximum reasoning capability. For every research question:\n1. Search the web thoroughly for current information\n2. Think deeply using your full reasoning budget\n3. Cite all sources with URLs\n4. Structure your response with clear headings\n5. Provide comprehensive analysis, not surface-level answers\n6. Include data, statistics, and evidence where available\n7. Compare multiple perspectives when relevant\n8. End with key takeaways and actionable insights\n\nRENDERING RULES:\n- TABLES → Use markdown tables for comparisons and structured data\n- MATH → Use $inline$ and $$display$$ LaTeX\n- CODE → Always specify language in code blocks\n- ARTIFACT RULES:\n  - ER DIAGRAMS → application/vnd.mermaid with erDiagram\n  - FLOWCHARTS → application/vnd.mermaid with graph TD/LR\n  - SEQUENCE DIAGRAMS → application/vnd.mermaid with sequenceDiagram\n  - SVG GRAPHICS → image/svg+xml\n  - ADVANCED TABLES → application/vnd.react\n  - INTERACTIVE CHARTS → application/vnd.react with Recharts\n  - ALWAYS include complete code, never truncate"
         temperature: 0.3
         maxOutputTokens: 32000
         maxContextTokens: 200000
@@ -237,26 +222,20 @@ memory:
 webSearch:
   searchProvider: serper
 
-# ─── Speech — Voice Input/Output (Step 7) ───
-# Activate by adding STT_API_KEY and TTS_API_KEY env vars (OpenAI key)
+# ─── Speech — Browser Built-in Voice (Step 7) ───
 speech:
-  tts:
-    openai:
-      apiKey: "${TTS_API_KEY}"
-      model: "tts-1-hd"
-      voices:
-        - "alloy"
-        - "echo"
-        - "nova"
-        - "shimmer"
-  stt:
-    openai:
-      apiKey: "${STT_API_KEY}"
-      model: "whisper-1"
   speechTab:
     conversationMode: true
-    speechToText: true
-    textToSpeech: true
+    advancedMode: false
+    speechToText:
+      engineSTT: "browser"
+      autoTranscribeAudio: true
+      autoSendText: 0
+      decibelValue: -45
+    textToSpeech:
+      engineTTS: "browser"
+      automaticPlayback: false
+      playbackRate: 1.0
 
 # ─── Token Tracking & Usage Dashboard (Step 11) ───
 balance:
@@ -309,12 +288,3 @@ fileConfig:
         - "text/html"
         - "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    custom:
-      fileLimit: 10
-      fileSizeLimit: 25
-      supportedMimeTypes:
-        - "application/pdf"
-        - "text/plain"
-        - "text/markdown"
-        - "text/csv"
-        - "application/json"
