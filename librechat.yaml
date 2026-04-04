@@ -28,44 +28,31 @@ rateLimits:
     userMax: 50
     userWindowInMinutes: 60
 
-# ─── AWS Bedrock Endpoint (Latest Models) ───
+# ─── AWS Bedrock Endpoint (Latest Models 2026) ───
 endpoints:
   bedrock:
-    enabled: true
+    models:
+      - "us.anthropic.claude-opus-4-20250514-v1:0"
+      - "us.anthropic.claude-sonnet-4-20250514-v1:0"
+      - "us.anthropic.claude-3-5-haiku-20241022-v1:0"
     availableRegions:
       - us-east-1
       - us-west-2
     streamRate: 35
-    titleModel: "us.anthropic.claude-sonnet-4-20250514-v1:0"
-    plugins: true
+    titleModel: "us.anthropic.claude-3-5-haiku-20241022-v1:0"
 
 # ─── Memory (Cross-Conversation Persistence) ───
 memory:
   enabled: true
-  tokenLimit: 2000
-  messageWindowSize: 10
 
-# ─── Web Search (Serper.dev + Cohere Rerank via Bedrock) ───
+# ─── Web Search (Serper.dev Google Search) ───
 webSearch:
   searchProvider: serper
-  reranker:
-    provider: cohere
-    model: rerank-english-v3.0
 
-# ─── Artifacts (SVG, HTML, React, Mermaid, Charts, etc.) ───
-artifacts:
-  enabled: true
-
-# ─── Code Interpreter ───
-codeInterpreter:
-  enabled: true
-
-# ─── MCP Servers (expandable) ───
 mcpServers: {}
 
 actions:
   allowedDomains: []
-  fileStrategy: "local"
 
 fileConfig:
   endpoints:
