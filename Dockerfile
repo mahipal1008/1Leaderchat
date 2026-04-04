@@ -10,8 +10,16 @@ COPY --chown=node:node librechat.yaml /app/librechat.yaml
 RUN sed -i 's/timeoutMs = 3000/timeoutMs = 30000/g' /app/api/server/controllers/agents/client.js 2>/dev/null || true
 
 # ── Upgrade AWS SDK for Bedrock API Key support ──
-# Bedrock API Keys (BedrockAPIKey-*) require SDK 3.1000+ for proper SigV4 handling
-RUN cd /app && npm install @aws-sdk/client-bedrock-runtime@latest --save 2>/dev/null || true
+# Bedrock API Keys (BedrockAPIKey-*) require recent SDK for proper SigV4 handling.
+# Install latest SDK at top level AND remove any nested copies so all packages
+# use the upgraded version via npm hoisting.
+USER root
+RUN cd /app && \
+    npm install @aws-sdk/client-bedrock-runtime@latest --save && \
+    find node_modules/@langchain -path '*/node_modules/@aws-sdk/client-bedrock-runtime' -type d -exec rm -rf {} + 2>/dev/null; \
+    find node_modules/@librechat -path '*/node_modules/@aws-sdk/client-bedrock-runtime' -type d -exec rm -rf {} + 2>/dev/null; \
+    echo "AWS SDK upgrade complete"
+USER node
 
 # Render expects the app to listen on port 10000
 ENV PORT=10000
