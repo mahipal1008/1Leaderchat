@@ -75,7 +75,6 @@ modelSpecs:
     # ── Claude Opus 4.6 — Most Capable + Thinking ──
     - name: "opus-4-6-thinking"
       label: "Claude Opus 4.6"
-      default: true
       description: "Most capable model with deep reasoning, artifacts, and web search"
       iconURL: "anthropic"
       showIconInHeader: true
@@ -103,6 +102,7 @@ modelSpecs:
     # ── Claude Sonnet 4.6 — Fast + Smart + Thinking ──
     - name: "sonnet-4-6-thinking"
       label: "Claude Sonnet 4.6"
+      default: true
       description: "Fast and smart with thinking mode — great daily driver"
       iconURL: "anthropic"
       showIconInHeader: true
@@ -169,9 +169,9 @@ modelSpecs:
         thinking: false
 
     # ── Deep Research — Opus 4.6 Max Thinking (replaces Perplexity) ──
-    - name: "opus-4-6-research"
+    - name: "deep-research"
       label: "Deep Research (Opus 4.6)"
-      description: "Maximum reasoning + web search for deep research and complex analysis"
+      description: "Maximum reasoning + web search — deep research and complex analysis via Bedrock"
       iconURL: "anthropic"
       showIconInHeader: true
       showIconInMenu: true
@@ -183,8 +183,8 @@ modelSpecs:
         endpoint: "bedrock"
         model: "us.anthropic.claude-opus-4-6-v1"
         modelLabel: "Deep Research"
-        greeting: "I'm Deep Research mode — powered by Claude Opus 4.6 with maximum reasoning. I'll search the web, think deeply, cite sources, and provide comprehensive analysis. Ask me anything complex."
-        promptPrefix: "You are a deep research assistant with maximum reasoning capability. For every research question:\n1. Search the web thoroughly for current information\n2. Think deeply using your full reasoning budget\n3. Cite all sources with URLs\n4. Structure your response with clear headings\n5. Provide comprehensive analysis, not surface-level answers\n6. Include data, statistics, and evidence where available\n7. Compare multiple perspectives when relevant\n8. End with key takeaways and actionable insights\n\nRENDERING RULES:\n- TABLES → Use markdown tables for comparisons and structured data\n- MATH → Use $inline$ and $$display$$ LaTeX\n- CODE → Always specify language in code blocks\n- ARTIFACT RULES:\n  - ER DIAGRAMS → application/vnd.mermaid with erDiagram\n  - FLOWCHARTS → application/vnd.mermaid with graph TD/LR\n  - SEQUENCE DIAGRAMS → application/vnd.mermaid with sequenceDiagram\n  - SVG GRAPHICS → image/svg+xml\n  - ADVANCED TABLES → application/vnd.react\n  - INTERACTIVE CHARTS → application/vnd.react with Recharts\n  - ALWAYS include complete code, never truncate"
+        greeting: "I'm Deep Research mode — powered by Claude Opus 4.6 with maximum reasoning. I search the web, think deeply, cite sources, and provide comprehensive analysis."
+        promptPrefix: "You are a deep research assistant with maximum reasoning capability. For every research question:\n1. Search the web thoroughly for current information\n2. Think deeply using your full reasoning budget\n3. Cite all sources with URLs\n4. Structure your response with clear headings\n5. Provide comprehensive analysis, not surface-level answers\n6. Include data, statistics, and evidence where available\n7. Compare multiple perspectives when relevant\n8. End with key takeaways and actionable insights\n\nRENDERING RULES:\n- TABLES → Use markdown tables for comparisons and structured data\n- MATH → Use $inline$ and $$display$$ LaTeX\n- CODE → Always specify language in code blocks\n- ER DIAGRAMS → artifact type: application/vnd.mermaid with erDiagram\n- FLOWCHARTS → artifact type: application/vnd.mermaid with graph TD/LR\n- SEQUENCE DIAGRAMS → artifact type: application/vnd.mermaid with sequenceDiagram\n- SVG GRAPHICS → artifact type: image/svg+xml\n- ADVANCED TABLES → artifact type: application/vnd.react\n- INTERACTIVE CHARTS → artifact type: application/vnd.react with Recharts\n- ALWAYS include complete code, never truncate"
         temperature: 0.3
         maxOutputTokens: 32000
         maxContextTokens: 200000
@@ -222,7 +222,7 @@ memory:
 webSearch:
   searchProvider: serper
 
-# ─── Speech — Browser Built-in Voice (Step 7) ───
+# ─── Speech — Browser Built-in Voice (no API key needed) ───
 speech:
   speechTab:
     conversationMode: true
