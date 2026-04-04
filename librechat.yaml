@@ -217,6 +217,7 @@ modelSpecs:
         endpoint: "bedrock"
         model: "us.anthropic.claude-sonnet-4-6"
         modelLabel: "Claude Sonnet 4.6 Fast"
+        greeting: "I'm Sonnet 4.6 in fast mode — no thinking overhead, instant responses. Great for quick questions, translations, and simple tasks."
         temperature: 0.5
         maxOutputTokens: 8192
         maxContextTokens: 200000
@@ -224,11 +225,12 @@ modelSpecs:
         append_current_datetime: true
         thinking: false
         resendFiles: true
+        imageDetail: "high"
 
     # ── Claude Haiku 4.5 — Instant ──
     - name: "haiku-4-5"
       label: "Claude Haiku 4.5"
-      description: "Fastest and cheapest — instant responses"
+      description: "Fastest and cheapest — instant responses for quick tasks"
       iconURL: "anthropic"
       showIconInMenu: true
       artifacts: true
@@ -238,12 +240,69 @@ modelSpecs:
         endpoint: "bedrock"
         model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
         modelLabel: "Claude Haiku 4.5"
+        greeting: "I'm Haiku 4.5 — the fastest model. Best for quick answers, brainstorming, translations, and simple tasks at the lowest cost."
         temperature: 0.5
         maxOutputTokens: 4096
         maxContextTokens: 200000
         promptCache: true
         append_current_datetime: true
         thinking: false
+        resendFiles: true
+        imageDetail: "high"
+
+    # ── Writing Assistant — Sonnet for long-form content ──
+    - name: "writing-assistant"
+      label: "Writing Assistant"
+      description: "Optimized for essays, emails, docs, startup applications, and content"
+      iconURL: "anthropic"
+      showIconInMenu: true
+      artifacts: true
+      webSearch: true
+      fileSearch: true
+      preset:
+        endpoint: "bedrock"
+        model: "us.anthropic.claude-sonnet-4-6"
+        modelLabel: "Writing Assistant"
+        greeting: "I'm your Writing Assistant — optimized for emails, essays, documentation, startup applications, and any long-form content. Just tell me what you need."
+        promptPrefix: |
+          You are an expert writing assistant. Adapt your writing style to the context:
+
+          FOR EMAILS:
+          - Professional tone, concise, clear subject line suggestion
+          - Include greeting and sign-off appropriate to formality level
+
+          FOR STARTUP APPLICATIONS (YC, NVIDIA, Grants):
+          - Concise, metrics-driven, founder-voice
+          - Lead with traction and unique insight
+          - Avoid buzzwords, be specific about technology
+
+          FOR DOCUMENTATION:
+          - Clear headings, code examples, step-by-step
+          - API reference style when appropriate
+
+          FOR ACADEMIC WRITING:
+          - Proper structure: intro, body, conclusion
+          - Formal tone, citations where needed
+
+          FOR GENERAL CONTENT:
+          - Match the user's tone and voice
+          - Be concise unless asked for depth
+          - Use formatting: headings, lists, bold for emphasis
+
+          RULES:
+          - Always produce complete, ready-to-use text
+          - Never use filler phrases or unnecessary caveats
+          - If the user provides a draft, improve it — don't rewrite from scratch
+          - For artifacts: use text/html for formatted documents, application/vnd.react for interactive editors
+        temperature: 0.7
+        maxOutputTokens: 16384
+        maxContextTokens: 200000
+        promptCache: true
+        append_current_datetime: true
+        thinking: true
+        thinkingBudget: 4000
+        resendFiles: true
+        imageDetail: "high"
 
     # ── Deep Research — Opus 4.6 Max Thinking ──
     - name: "deep-research"
