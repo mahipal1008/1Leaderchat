@@ -193,27 +193,16 @@ modelSpecs:
         resendFiles: true
         imageDetail: "high"
 
-# ─── Memory System (Step 2 — Same as claude.ai) ───
+# ─── Memory System (Same as claude.ai) ───
 memory:
   disabled: false
   personalize: true
   tokenLimit: 4000
   charLimit: 500
   messageWindowSize: 10
-  validKeys:
-    - "preferences"
-    - "facts"
-    - "context"
-    - "projects"
-    - "location"
-    - "work"
-    - "goals"
   agent:
     provider: "bedrock"
     model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
-    model_parameters:
-      temperature: 0.2
-      max_tokens: 500
 
 # ─── Web Search (Step 3 — Serper.dev Google Search) ───
 webSearch:
