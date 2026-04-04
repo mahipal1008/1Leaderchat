@@ -82,6 +82,7 @@ modelSpecs:
         greeting: "Hi, I'm Claude Opus 4.6 — the most capable model. I can reason deeply, generate artifacts (diagrams, charts, code, SVGs), search the web, and handle complex tasks."
         temperature: 0.7
         maxOutputTokens: 16384
+        maxContextTokens: 200000
         promptCache: true
         append_current_datetime: true
         thinking: true
@@ -107,6 +108,7 @@ modelSpecs:
         greeting: "Hi, I'm Claude Sonnet 4.6 — fast, smart, with reasoning. Perfect for coding, writing, and analysis."
         temperature: 0.7
         maxOutputTokens: 16384
+        maxContextTokens: 200000
         promptCache: true
         append_current_datetime: true
         thinking: true
@@ -129,6 +131,7 @@ modelSpecs:
         modelLabel: "Claude Sonnet 4.6 Fast"
         temperature: 0.5
         maxOutputTokens: 8192
+        maxContextTokens: 200000
         promptCache: true
         append_current_datetime: true
         thinking: false
@@ -149,6 +152,7 @@ modelSpecs:
         modelLabel: "Claude Haiku 4.5"
         temperature: 0.5
         maxOutputTokens: 4096
+        maxContextTokens: 200000
         promptCache: true
         append_current_datetime: true
         thinking: false
@@ -171,6 +175,7 @@ modelSpecs:
         promptPrefix: "You are an expert research assistant. Think deeply, cite sources, and provide comprehensive analysis."
         temperature: 0.3
         maxOutputTokens: 32000
+        maxContextTokens: 200000
         promptCache: true
         append_current_datetime: true
         thinking: true
@@ -197,6 +202,18 @@ memory:
 webSearch:
   searchProvider: serper
 
+# ─── Token Tracking & Usage Dashboard (Phase 7) ───
+balance:
+  enabled: true
+  startBalance: 10000000
+  autoRefillEnabled: true
+  refillIntervalValue: 1
+  refillIntervalUnit: "days"
+  refillAmount: 10000000
+
+transactions:
+  enabled: true
+
 mcpServers: {}
 
 actions:
@@ -205,8 +222,8 @@ actions:
 fileConfig:
   endpoints:
     bedrock:
-      fileLimit: 10
-      fileSizeLimit: 25
+      fileLimit: 20
+      fileSizeLimit: 50
       supportedMimeTypes:
         - "image/jpeg"
         - "image/png"
