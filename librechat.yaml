@@ -1,4 +1,4 @@
-version: 1.2.1
+version: 1.3.7
 cache: true
 
 interface:
@@ -7,12 +7,22 @@ interface:
   parameters: true
   sidePanel: true
   presets: true
-  prompts: true
   bookmarks: true
   multiConvo: true
-  agents: true
   runCode: true
   webSearch: true
+  fileSearch: true
+  fileCitations: true
+  temporaryChat: true
+  memories: true
+  prompts:
+    use: true
+    create: true
+    share: true
+  agents:
+    use: true
+    create: true
+    share: true
 
 registration:
   socialLogins: []
@@ -72,8 +82,12 @@ modelSpecs:
         greeting: "Hi, I'm Claude Opus 4.6 — the most capable model. I can reason deeply, generate artifacts (diagrams, charts, code, SVGs), search the web, and handle complex tasks."
         temperature: 0.7
         maxOutputTokens: 16384
+        promptCache: true
+        append_current_datetime: true
         thinking: true
         thinkingBudget: 10000
+        resendFiles: true
+        imageDetail: "high"
 
     # ── Claude Sonnet 4.6 — Fast + Smart + Thinking ──
     - name: "sonnet-4-6-thinking"
@@ -93,8 +107,12 @@ modelSpecs:
         greeting: "Hi, I'm Claude Sonnet 4.6 — fast, smart, with reasoning. Perfect for coding, writing, and analysis."
         temperature: 0.7
         maxOutputTokens: 16384
+        promptCache: true
+        append_current_datetime: true
         thinking: true
         thinkingBudget: 8000
+        resendFiles: true
+        imageDetail: "high"
 
     # ── Claude Sonnet 4.6 — No Thinking (faster) ──
     - name: "sonnet-4-6-fast"
@@ -111,7 +129,10 @@ modelSpecs:
         modelLabel: "Claude Sonnet 4.6 Fast"
         temperature: 0.5
         maxOutputTokens: 8192
+        promptCache: true
+        append_current_datetime: true
         thinking: false
+        resendFiles: true
 
     # ── Claude Haiku 4.5 — Instant ──
     - name: "haiku-4-5"
@@ -121,12 +142,15 @@ modelSpecs:
       iconURL: "anthropic"
       showIconInMenu: true
       artifacts: true
+      webSearch: true
       preset:
         endpoint: "bedrock"
         model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
         modelLabel: "Claude Haiku 4.5"
         temperature: 0.5
         maxOutputTokens: 4096
+        promptCache: true
+        append_current_datetime: true
         thinking: false
 
     # ── Claude Opus 4.6 — Max Thinking (research) ──
@@ -139,6 +163,7 @@ modelSpecs:
       artifacts: true
       webSearch: true
       fileSearch: true
+      executeCode: true
       preset:
         endpoint: "bedrock"
         model: "us.anthropic.claude-opus-4-6-v1"
@@ -146,13 +171,27 @@ modelSpecs:
         promptPrefix: "You are an expert research assistant. Think deeply, cite sources, and provide comprehensive analysis."
         temperature: 0.3
         maxOutputTokens: 32000
+        promptCache: true
+        append_current_datetime: true
         thinking: true
         thinkingBudget: 20000
         effort: "max"
+        resendFiles: true
+        imageDetail: "high"
 
 # ─── Memory (Cross-Conversation Persistence) ───
 memory:
-  enabled: true
+  disabled: false
+  personalize: true
+  tokenLimit: 2000
+  charLimit: 500
+  messageWindowSize: 10
+  agent:
+    provider: "bedrock"
+    model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
+    model_parameters:
+      temperature: 0.3
+      max_tokens: 500
 
 # ─── Web Search (Serper.dev Google Search) ───
 webSearch:
