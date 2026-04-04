@@ -41,10 +41,6 @@ rateLimits:
     userMax: 50
     userWindowInMinutes: 60
 
-# ─── Conversation Settings ───
-conversationSettings:
-  maxConvoTitleLength: 80
-
 # ─── Endpoints ───
 endpoints:
   # ── AWS Bedrock (Primary — Claude Models) ──
@@ -210,8 +206,6 @@ memory:
   agent:
     provider: "bedrock"
     model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
-    model_parameters:
-      max_tokens: 1024
     instructions: |
       You are a memory management assistant. Analyze conversations and manage the user's memory store using set_memory and delete_memory tools.
 
