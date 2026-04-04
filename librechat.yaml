@@ -7,10 +7,10 @@ interface:
   modelSelect: true
   parameters: true
   sidePanel: true
-  presets: true
+  presets: false
   bookmarks: true
   multiConvo: true
-  runCode: true
+  runCode: false
   webSearch: true
   fileSearch: true
   fileCitations: true
@@ -61,11 +61,10 @@ endpoints:
     summarize: true
     plugins: true
 
-  # ── Agents Endpoint — Artifacts + Code Execution (Step 5/9) ──
+  # ── Agents Endpoint — Artifacts only (no execute_code without API key) ──
   agents:
     capabilities:
       - "artifacts"
-      - "execute_code"
 
 # ─── Model Specs (Claude.ai-like experience) ───
 modelSpecs:
@@ -81,7 +80,6 @@ modelSpecs:
       showIconInMenu: true
       artifacts: true
       webSearch: true
-      executeCode: true
       fileSearch: true
       preset:
         endpoint: "bedrock"
@@ -99,7 +97,7 @@ modelSpecs:
         resendFiles: true
         imageDetail: "high"
 
-    # ── Claude Sonnet 4.6 — Fast + Smart + Thinking ──
+    # ── Claude Sonnet 4.6 — Default (Fast + Smart + Thinking) ──
     - name: "sonnet-4-6-thinking"
       label: "Claude Sonnet 4.6"
       default: true
@@ -109,7 +107,6 @@ modelSpecs:
       showIconInMenu: true
       artifacts: true
       webSearch: true
-      executeCode: true
       fileSearch: true
       preset:
         endpoint: "bedrock"
@@ -135,7 +132,6 @@ modelSpecs:
       showIconInMenu: true
       artifacts: true
       webSearch: true
-      executeCode: true
       fileSearch: true
       preset:
         endpoint: "bedrock"
@@ -158,7 +154,6 @@ modelSpecs:
       showIconInMenu: true
       artifacts: true
       webSearch: true
-      executeCode: true
       fileSearch: true
       preset:
         endpoint: "bedrock"
@@ -171,7 +166,7 @@ modelSpecs:
         append_current_datetime: true
         thinking: false
 
-    # ── Deep Research — Opus 4.6 Max Thinking (replaces Perplexity) ──
+    # ── Deep Research — Opus 4.6 Max Thinking ──
     - name: "deep-research"
       label: "Deep Research (Opus 4.6)"
       description: "Maximum reasoning + web search — deep research and complex analysis via Bedrock"
@@ -181,7 +176,6 @@ modelSpecs:
       artifacts: true
       webSearch: true
       fileSearch: true
-      executeCode: true
       preset:
         endpoint: "bedrock"
         model: "us.anthropic.claude-opus-4-6-v1"
@@ -210,7 +204,7 @@ memory:
     provider: "bedrock"
     model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
 
-# ─── Web Search (Step 3 — Serper.dev Google Search) ───
+# ─── Web Search (Serper.dev Google Search) ───
 webSearch:
   searchProvider: serper
 
@@ -229,26 +223,14 @@ speech:
       automaticPlayback: false
       playbackRate: 1.0
 
-# ─── Token Tracking & Usage Dashboard (Step 11) ───
-# balance disabled — personal deployment, no credit limits needed
-# transactions still log all usage for visibility in Settings > Usage
+# ─── Usage Tracking ───
 balance:
   enabled: false
 
 transactions:
   enabled: true
 
-# ─── MCP Servers — Connectors (Step 8) ───
-# Add MCP servers here. Examples:
-#   notion:
-#     type: streamable-http
-#     url: https://mcp.notion.com/mcp
-#     serverInstructions: true
-#   github:
-#     command: npx
-#     args: ["-y", "@modelcontextprotocol/server-github"]
-#     env:
-#       GITHUB_PERSONAL_ACCESS_TOKEN: "${GITHUB_TOKEN}"
+# ─── MCP Servers ───
 mcpServers: {}
 
 mcpSettings:
