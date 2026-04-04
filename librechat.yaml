@@ -61,7 +61,11 @@ endpoints:
   agents:
     capabilities:
       - "artifacts"
-      - "mcp"
+      - "web_search"
+      - "file_search"
+      - "tools"
+      - "actions"
+      - "ocr"
 
 # ─── Model Specs (Claude.ai-like experience) ───
 modelSpecs:
