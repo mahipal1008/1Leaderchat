@@ -51,11 +51,12 @@ endpoints:
     models:
       - "us.anthropic.claude-opus-4-6-v1"
       - "us.anthropic.claude-sonnet-4-6"
-      - "us.anthropic.claude-opus-4-20250514-v1:0"
       - "us.anthropic.claude-sonnet-4-20250514-v1:0"
       - "us.anthropic.claude-haiku-4-5-20251001-v1:0"
-      - "us.anthropic.claude-3-5-sonnet-20241022-v2:0"
-      - "us.anthropic.claude-3-5-haiku-20241022-v1:0"
+      # Removed legacy models (Access Denied on Bedrock):
+      # - "us.anthropic.claude-opus-4-20250514-v1:0"  (legacy)
+      # - "us.anthropic.claude-3-5-sonnet-20241022-v2:0"  (validation error)
+      # - "us.anthropic.claude-3-5-haiku-20241022-v1:0"  (legacy)
     availableRegions:
       - us-east-1
       - us-west-2
