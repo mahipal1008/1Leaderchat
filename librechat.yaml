@@ -53,9 +53,11 @@ endpoints:
 memory:
   enabled: true
 
-# ─── Web Search (Serper.dev Google Search) ───
+# ─── Web Search (Serper.dev + Firecrawl Scraper) ───
 webSearch:
   searchProvider: serper
+  scraperProvider: firecrawl
+  firecrawlApiUrl: "http://librechat-firecrawl:10000"
 
 mcpServers: {}
 
