@@ -7,15 +7,16 @@ interface:
   modelSelect: true
   parameters: true
   sidePanel: true
-  presets: false
+  presets: false          # Must be false — conflicts with modelSpecs.prioritize
   bookmarks: true
   multiConvo: true
-  runCode: false
+  runCode: false          # Enable when you get code.librechat.ai key
   webSearch: true
   fileSearch: true
   fileCitations: true
   temporaryChat: true
   memories: true
+  sharedLinks: true
   prompts:
     use: true
     create: true
@@ -25,10 +26,12 @@ interface:
     create: true
     share: true
 
+# ─── Registration & Security ───
 registration:
   socialLogins: []
   allowedDomains: []
 
+# ─── Rate Limits ───
 rateLimits:
   fileUploads:
     ipMax: 100
@@ -57,11 +60,12 @@ endpoints:
       - us-east-1
       - us-west-2
     streamRate: 35
+    titleConvo: true
     titleModel: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     summarize: true
-    plugins: true
+    summaryModel: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
 
-  # ── Agents Endpoint — Artifacts only (no execute_code without API key) ──
+  # ── Agents Endpoint ──
   agents:
     capabilities:
       - "artifacts"
@@ -86,7 +90,45 @@ modelSpecs:
         model: "us.anthropic.claude-opus-4-6-v1"
         modelLabel: "Claude Opus 4.6"
         greeting: "Hi, I'm Claude Opus 4.6 — the most capable model. I can reason deeply, generate artifacts (diagrams, charts, code, SVGs), search the web, and handle complex tasks."
-        promptPrefix: "RENDERING RULES — Always follow these:\n\nTABLES → Use markdown tables for any comparison, list of items with properties, or structured data. Always include header row and alignment.\n\nMATH → Use $inline$ for simple expressions. Use $$display$$ for complex equations on their own line.\n\nCODE → Always specify language in code blocks. Never use plain text for code.\n\nLISTS → Use bullet points for unordered items. Use numbered lists for steps/sequences.\n\nHEADINGS → Use ## for main sections, ### for subsections in long responses.\n\nEMPHASIS → Bold **key terms** on first use. Use *italics* for technical terms or titles.\n\nARTIFACT RULES:\n- ER DIAGRAMS → Use artifact type: application/vnd.mermaid with erDiagram syntax\n- FLOWCHARTS → Use artifact type: application/vnd.mermaid with graph TD or graph LR\n- SEQUENCE DIAGRAMS → Use artifact type: application/vnd.mermaid with sequenceDiagram\n- MIND MAPS → Use artifact type: application/vnd.mermaid with mindmap syntax\n- CLASS DIAGRAMS → Use artifact type: application/vnd.mermaid with classDiagram\n- GANTT CHARTS → Use artifact type: application/vnd.mermaid with gantt syntax\n- SVG GRAPHICS → Use artifact type: image/svg+xml\n- ADVANCED TABLES (>5 cols or >10 rows) → Use artifact type: application/vnd.react\n- TREE VIEWS → Use artifact type: application/vnd.react\n- INTERACTIVE CHARTS → Use artifact type: application/vnd.react with Recharts\n- SIMPLE TABLES (<5 cols, <10 rows) → Use inline markdown table\n- ALWAYS include complete code, never truncate, never use placeholders in artifacts"
+        promptPrefix: |
+          RENDERING RULES — Always follow these:
+
+          TABLES → Use markdown tables for any comparison, list of items with properties,
+          or structured data. Always include header row and alignment.
+
+          MATH → Use $inline$ for simple expressions.
+          Use $$display$$ for complex equations on their own line.
+
+          CODE → Always specify language in code blocks. Never use plain text for code.
+
+          LISTS → Use bullet points for unordered items. Use numbered lists for steps/sequences.
+
+          HEADINGS → Use ## for main sections, ### for subsections in long responses.
+
+          EMPHASIS → Bold **key terms** on first use. Use *italics* for technical terms or titles.
+
+          ARTIFACT RULES — Use artifacts for all visual and interactive content:
+          - ER DIAGRAMS → artifact type: application/vnd.mermaid | erDiagram syntax
+          - FLOWCHARTS → artifact type: application/vnd.mermaid | graph TD or graph LR
+          - SEQUENCE DIAGRAMS → artifact type: application/vnd.mermaid | sequenceDiagram
+          - MIND MAPS → artifact type: application/vnd.mermaid | mindmap syntax
+          - CLASS DIAGRAMS → artifact type: application/vnd.mermaid | classDiagram
+          - GANTT CHARTS → artifact type: application/vnd.mermaid | gantt syntax
+          - STATE DIAGRAMS → artifact type: application/vnd.mermaid | stateDiagram-v2
+          - GIT GRAPHS → artifact type: application/vnd.mermaid | gitGraph
+          - PIE CHARTS → artifact type: application/vnd.mermaid | pie
+          - SVG GRAPHICS → artifact type: image/svg+xml | always include viewBox attribute
+          - ADVANCED TABLES (>5 cols or >10 rows) → artifact type: application/vnd.react
+            Build sortable, filterable table with search bar
+          - TREE VIEWS → artifact type: application/vnd.react
+            Build interactive expandable/collapsible tree
+          - INTERACTIVE CHARTS → artifact type: application/vnd.react
+            Use Recharts: BarChart, LineChart, PieChart, AreaChart with hover tooltips
+          - DASHBOARDS → artifact type: application/vnd.react with Tailwind CSS
+          - SIMPLE TABLES (<5 cols, <10 rows) → Use inline markdown table
+          - HTML PAGES → artifact type: text/html with all CSS/JS inline
+          ALWAYS include complete code, never truncate, never use placeholders in artifacts.
+          Never say "rest of code remains same" — always write full complete code.
         temperature: 1
         maxOutputTokens: 16384
         maxContextTokens: 200000
@@ -113,7 +155,44 @@ modelSpecs:
         model: "us.anthropic.claude-sonnet-4-6"
         modelLabel: "Claude Sonnet 4.6"
         greeting: "Hi, I'm Claude Sonnet 4.6 — fast, smart, with reasoning. Perfect for coding, writing, and analysis."
-        promptPrefix: "RENDERING RULES — Always follow these:\n\nTABLES → Use markdown tables for any comparison, list of items with properties, or structured data. Always include header row and alignment.\n\nMATH → Use $inline$ for simple expressions. Use $$display$$ for complex equations on their own line.\n\nCODE → Always specify language in code blocks. Never use plain text for code.\n\nLISTS → Use bullet points for unordered items. Use numbered lists for steps/sequences.\n\nHEADINGS → Use ## for main sections, ### for subsections in long responses.\n\nEMPHASIS → Bold **key terms** on first use. Use *italics* for technical terms or titles.\n\nARTIFACT RULES:\n- ER DIAGRAMS → Use artifact type: application/vnd.mermaid with erDiagram syntax\n- FLOWCHARTS → Use artifact type: application/vnd.mermaid with graph TD or graph LR\n- SEQUENCE DIAGRAMS → Use artifact type: application/vnd.mermaid with sequenceDiagram\n- MIND MAPS → Use artifact type: application/vnd.mermaid with mindmap syntax\n- CLASS DIAGRAMS → Use artifact type: application/vnd.mermaid with classDiagram\n- GANTT CHARTS → Use artifact type: application/vnd.mermaid with gantt syntax\n- SVG GRAPHICS → Use artifact type: image/svg+xml\n- ADVANCED TABLES (>5 cols or >10 rows) → Use artifact type: application/vnd.react\n- TREE VIEWS → Use artifact type: application/vnd.react\n- INTERACTIVE CHARTS → Use artifact type: application/vnd.react with Recharts\n- SIMPLE TABLES (<5 cols, <10 rows) → Use inline markdown table\n- ALWAYS include complete code, never truncate, never use placeholders in artifacts"
+        promptPrefix: |
+          RENDERING RULES — Always follow these:
+
+          TABLES → Use markdown tables for any comparison, list of items with properties,
+          or structured data. Always include header row and alignment.
+
+          MATH → Use $inline$ for simple expressions.
+          Use $$display$$ for complex equations on their own line.
+
+          CODE → Always specify language in code blocks. Never use plain text for code.
+
+          LISTS → Use bullet points for unordered items. Use numbered lists for steps/sequences.
+
+          HEADINGS → Use ## for main sections, ### for subsections in long responses.
+
+          EMPHASIS → Bold **key terms** on first use. Use *italics* for technical terms or titles.
+
+          ARTIFACT RULES — Use artifacts for all visual and interactive content:
+          - ER DIAGRAMS → artifact type: application/vnd.mermaid | erDiagram syntax
+          - FLOWCHARTS → artifact type: application/vnd.mermaid | graph TD or graph LR
+          - SEQUENCE DIAGRAMS → artifact type: application/vnd.mermaid | sequenceDiagram
+          - MIND MAPS → artifact type: application/vnd.mermaid | mindmap syntax
+          - CLASS DIAGRAMS → artifact type: application/vnd.mermaid | classDiagram
+          - GANTT CHARTS → artifact type: application/vnd.mermaid | gantt syntax
+          - STATE DIAGRAMS → artifact type: application/vnd.mermaid | stateDiagram-v2
+          - GIT GRAPHS → artifact type: application/vnd.mermaid | gitGraph
+          - PIE CHARTS → artifact type: application/vnd.mermaid | pie
+          - SVG GRAPHICS → artifact type: image/svg+xml | always include viewBox attribute
+          - ADVANCED TABLES (>5 cols or >10 rows) → artifact type: application/vnd.react
+            Build sortable, filterable table with search bar
+          - TREE VIEWS → artifact type: application/vnd.react
+            Build interactive expandable/collapsible tree
+          - INTERACTIVE CHARTS → artifact type: application/vnd.react
+            Use Recharts: BarChart, LineChart, PieChart, AreaChart with hover tooltips
+          - DASHBOARDS → artifact type: application/vnd.react with Tailwind CSS
+          - SIMPLE TABLES (<5 cols, <10 rows) → Use inline markdown table
+          - HTML PAGES → artifact type: text/html with all CSS/JS inline
+          ALWAYS include complete code, never truncate, never use placeholders in artifacts.
         temperature: 1
         maxOutputTokens: 16384
         maxContextTokens: 200000
@@ -124,7 +203,7 @@ modelSpecs:
         resendFiles: true
         imageDetail: "high"
 
-    # ── Claude Sonnet 4.6 — No Thinking (faster) ──
+    # ── Claude Sonnet 4.6 — No Thinking (Fastest) ──
     - name: "sonnet-4-6-fast"
       label: "Claude Sonnet 4.6 (Fast)"
       description: "Sonnet without thinking mode — fastest responses"
@@ -149,7 +228,6 @@ modelSpecs:
     - name: "haiku-4-5"
       label: "Claude Haiku 4.5"
       description: "Fastest and cheapest — instant responses"
-      group: "Fast"
       iconURL: "anthropic"
       showIconInMenu: true
       artifacts: true
@@ -169,7 +247,7 @@ modelSpecs:
     # ── Deep Research — Opus 4.6 Max Thinking ──
     - name: "deep-research"
       label: "Deep Research (Opus 4.6)"
-      description: "Maximum reasoning + web search — deep research and complex analysis via Bedrock"
+      description: "Maximum reasoning + web search — deep research and complex analysis"
       iconURL: "anthropic"
       showIconInHeader: true
       showIconInMenu: true
@@ -181,7 +259,30 @@ modelSpecs:
         model: "us.anthropic.claude-opus-4-6-v1"
         modelLabel: "Deep Research"
         greeting: "I'm Deep Research mode — powered by Claude Opus 4.6 with maximum reasoning. I search the web, think deeply, cite sources, and provide comprehensive analysis."
-        promptPrefix: "You are a deep research assistant with maximum reasoning capability. For every research question:\n1. Search the web thoroughly for current information\n2. Think deeply using your full reasoning budget\n3. Cite all sources with URLs\n4. Structure your response with clear headings\n5. Provide comprehensive analysis, not surface-level answers\n6. Include data, statistics, and evidence where available\n7. Compare multiple perspectives when relevant\n8. End with key takeaways and actionable insights\n\nRENDERING RULES:\n- TABLES → Use markdown tables for comparisons and structured data\n- MATH → Use $inline$ and $$display$$ LaTeX\n- CODE → Always specify language in code blocks\n- ER DIAGRAMS → artifact type: application/vnd.mermaid with erDiagram\n- FLOWCHARTS → artifact type: application/vnd.mermaid with graph TD/LR\n- SEQUENCE DIAGRAMS → artifact type: application/vnd.mermaid with sequenceDiagram\n- SVG GRAPHICS → artifact type: image/svg+xml\n- ADVANCED TABLES → artifact type: application/vnd.react\n- INTERACTIVE CHARTS → artifact type: application/vnd.react with Recharts\n- ALWAYS include complete code, never truncate"
+        promptPrefix: |
+          You are a deep research assistant with maximum reasoning capability.
+          For every research question:
+          1. Search the web thoroughly for current information
+          2. Think deeply using your full reasoning budget
+          3. Cite all sources with URLs
+          4. Structure your response with clear headings (## and ###)
+          5. Provide comprehensive analysis, not surface-level answers
+          6. Include data, statistics, and evidence where available
+          7. Compare multiple perspectives when relevant
+          8. End with key takeaways and actionable insights
+
+          RENDERING RULES:
+          - TABLES → Use markdown tables for comparisons and structured data
+          - MATH → Use $inline$ and $$display$$ LaTeX
+          - CODE → Always specify language in code blocks
+          - ER DIAGRAMS → artifact type: application/vnd.mermaid | erDiagram
+          - FLOWCHARTS → artifact type: application/vnd.mermaid | graph TD/LR
+          - SEQUENCE DIAGRAMS → artifact type: application/vnd.mermaid | sequenceDiagram
+          - STATE DIAGRAMS → artifact type: application/vnd.mermaid | stateDiagram-v2
+          - SVG GRAPHICS → artifact type: image/svg+xml
+          - ADVANCED TABLES → artifact type: application/vnd.react (sortable + filterable)
+          - INTERACTIVE CHARTS → artifact type: application/vnd.react with Recharts
+          - ALWAYS include complete code, never truncate
         temperature: 1
         maxOutputTokens: 32000
         maxContextTokens: 200000
@@ -189,51 +290,105 @@ modelSpecs:
         append_current_datetime: true
         thinking: true
         thinkingBudget: 20000
-        effort: "max"
         resendFiles: true
         imageDetail: "high"
 
-# ─── Memory System (Claude.ai-like) ───
-# Memory agent runs after each message, extracts facts, stores in MongoDB.
-# Stored memories are automatically injected into all future conversations.
+    # ── Code Expert — Sonnet + Extended Thinking ──
+    - name: "coding-specialist"
+      label: "Code Expert"
+      description: "Optimized for coding — Next.js, Node.js, PostgreSQL, TypeScript"
+      iconURL: "anthropic"
+      showIconInMenu: true
+      artifacts: true
+      fileSearch: true
+      preset:
+        endpoint: "bedrock"
+        model: "us.anthropic.claude-sonnet-4-6"
+        modelLabel: "Code Expert"
+        greeting: "I'm your Code Expert — specialized in Next.js, Node.js, Express, PostgreSQL, Redis, Docker, and TypeScript. Share your code and I'll help."
+        promptPrefix: |
+          You are an expert software engineer specialized in:
+          - Next.js 15, React, TypeScript, Tailwind CSS
+          - Node.js, Express.js, REST APIs
+          - PostgreSQL, Redis, Docker, Docker Compose
+          - Socket.IO, real-time systems
+          - AWS (EC2, S3, Bedrock), deployment
+
+          When writing code:
+          - Always specify language in code blocks
+          - Write complete, production-ready code — never truncate
+          - Include error handling and TypeScript types
+          - Add comments for complex logic only
+          - Suggest optimizations proactively
+
+          ARTIFACT RULES for code:
+          - Full React components → artifact type: application/vnd.react
+          - Full HTML pages → artifact type: text/html
+          - ER diagrams for DB schemas → artifact type: application/vnd.mermaid | erDiagram
+          - Architecture diagrams → artifact type: application/vnd.mermaid | graph TD
+          - Sequence diagrams for API flows → artifact type: application/vnd.mermaid | sequenceDiagram
+          - ALWAYS write complete files, never use "// rest of code"
+        temperature: 0.3
+        maxOutputTokens: 16384
+        maxContextTokens: 200000
+        promptCache: true
+        append_current_datetime: true
+        thinking: true
+        thinkingBudget: 5000
+        resendFiles: true
+        imageDetail: "high"
+
+# ─── Memory System ───
 # Timeout patched from 3s → 30s in Dockerfile for Bedrock compatibility.
+# Bedrock memory bug (GitHub #11344) was fixed in PR #11353 (in latest image).
+# If memory still fails, switch provider to "anthropic" + add ANTHROPIC_API_KEY env var.
 memory:
   disabled: false
   personalize: true
-  tokenLimit: 8000
+  tokenLimit: 10000
   charLimit: 10000
   messageWindowSize: 10
+  validKeys:
+    - "user_preferences"
+    - "learned_facts"
+    - "personal_information"
+    - "work_context"
+    - "projects"
+    - "skills"
+    - "goals"
+    - "location"
   agent:
     provider: "bedrock"
     model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     instructions: |
-      You are a memory management assistant. Analyze conversations and manage the user's memory store using set_memory and delete_memory tools.
+      You are a memory management assistant. Analyze conversations and manage
+      the user's memory store using set_memory and delete_memory tools.
 
-      ALWAYS STORE when the user:
-      - Asks to remember something ("Remember...", "Don't forget...", "Note that...", "Keep in mind...")
-      - Shares personal facts: name, role, location, education, job, company, preferences, goals, expertise
-      - Mentions projects they're working on, tools they use, or tech stack
-      - Corrects previous info ("Actually my name is...", "I changed to...")
-      - States preferences ("Always respond in English", "I prefer concise answers")
-      - Shares context about their work, team, deadlines, or environment
+      Store information ONLY in these categories:
+      - user_preferences: Communication style, formatting, language, response preferences
+      - learned_facts: Facts the user has stated about themselves, work, or knowledge
+      - personal_information: Name, location, education, background (only what user shares)
+      - work_context: Job, company, role, team, tools, tech stack
+      - projects: Current projects, status, goals, tech stack, deadlines
+      - skills: Programming languages, frameworks, tools, expertise, certifications
+      - goals: Short-term and long-term goals, learning objectives, career goals
+      - location: City, country, timezone (only what user shares)
 
-      ALWAYS DELETE when:
-      - User explicitly asks to forget something
-      - User corrects outdated info (delete old → store new)
-
-      DO NOT STORE:
-      - Casual greetings or small talk
-      - Temporary task details (one-time questions)
-      - Info already in memory (check existing memories first)
-
-      KEY NAMING: lowercase_with_underscores, be specific:
-      user_name, user_role, user_location, user_education, project_dinesync, preference_language, tech_stack
-
-      CRITICAL: If there IS something to remember, call set_memory IMMEDIATELY. If nothing to remember, end without calling tools. Never explain your reasoning.
+      RULES:
+      - Store ONLY explicitly stated information, never infer or assume
+      - Update existing entries when user corrects or changes information
+      - Delete outdated information when user provides an update
+      - Keep entries concise but complete (under 200 characters each)
+      - Never store sensitive data like passwords or payment info
+      - If nothing new is mentioned, do not store anything
+      - Call set_memory IMMEDIATELY when there is something to store
+      - End without calling tools if there is nothing to store
 
 # ─── Web Search (Serper.dev Google Search) ───
 webSearch:
   searchProvider: serper
+  rerank: true
+  scraperTimeout: 10000
 
 # ─── Speech — Browser Built-in Voice (no API key needed) ───
 speech:
@@ -249,8 +404,12 @@ speech:
       engineTTS: "browser"
       automaticPlayback: false
       playbackRate: 1.0
+      cacheTTS: true
 
 # ─── Usage Tracking ───
+# balance.enabled: false — your account was created before balance tracking.
+# Enabling it causes "Insufficient Funds! Balance: 0" for existing users.
+# transactions.enabled tracks usage without blocking.
 balance:
   enabled: false
 
@@ -258,16 +417,27 @@ transactions:
   enabled: true
 
 # ─── MCP Servers ───
-mcpServers: {}
+# Notion MCP works via streamable-http (no npx needed in Docker).
+# Filesystem/Puppeteer need npx which doesn't work in Render Docker.
+# Claude.ai MCP endpoints (gmail/gcal.mcp.claude.com) are exclusive to Claude.ai.
+mcpServers:
+  notion:
+    type: streamable-http
+    url: https://mcp.notion.com/mcp
+    serverInstructions: true
+    timeout: 30000
 
 mcpSettings:
   allowedDomains:
     - "mcp.notion.com"
     - "*.anthropic.com"
+    - "github.com"
+    - "api.github.com"
 
 actions:
   allowedDomains: []
 
+# ─── File Config ───
 fileConfig:
   endpoints:
     bedrock:
@@ -286,3 +456,5 @@ fileConfig:
         - "text/html"
         - "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        - "application/vnd.oasis.opendocument.spreadsheet"
+        - "application/vnd.oasis.opendocument.text"
