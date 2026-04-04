@@ -238,13 +238,10 @@ speech:
       playbackRate: 1.0
 
 # ─── Token Tracking & Usage Dashboard (Step 11) ───
+# balance disabled — personal deployment, no credit limits needed
+# transactions still log all usage for visibility in Settings > Usage
 balance:
-  enabled: true
-  startBalance: 10000000
-  autoRefillEnabled: true
-  refillIntervalValue: 1
-  refillIntervalUnit: "days"
-  refillAmount: 10000000
+  enabled: false
 
 transactions:
   enabled: true
