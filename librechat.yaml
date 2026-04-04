@@ -28,18 +28,26 @@ rateLimits:
     userMax: 50
     userWindowInMinutes: 60
 
-# ─── AWS Bedrock Endpoint (Latest Models 2026) ───
+# ─── AWS Bedrock Endpoint (Latest Models — April 2026) ───
 endpoints:
   bedrock:
     models:
+      # Latest Claude 4.6 family (most capable)
+      - "us.anthropic.claude-opus-4-6-v1"
+      - "us.anthropic.claude-sonnet-4-6"
+      # Claude 4.0 family
       - "us.anthropic.claude-opus-4-20250514-v1:0"
       - "us.anthropic.claude-sonnet-4-20250514-v1:0"
+      # Claude 4.5 Haiku (fastest, cheapest)
+      - "us.anthropic.claude-haiku-4-5-20251001-v1:0"
+      # Claude 3.5 legacy
+      - "us.anthropic.claude-3-5-sonnet-20241022-v2:0"
       - "us.anthropic.claude-3-5-haiku-20241022-v1:0"
     availableRegions:
       - us-east-1
       - us-west-2
     streamRate: 35
-    titleModel: "us.anthropic.claude-3-5-haiku-20241022-v1:0"
+    titleModel: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
 
 # ─── Memory (Cross-Conversation Persistence) ───
 memory:
