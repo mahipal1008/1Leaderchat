@@ -3,10 +3,8 @@ cache: true
 
 # ─── Interface — All UI Features Enabled (Claude.ai parity) ───
 interface:
-  endpointsMenu: true
   modelSelect: true
   parameters: true
-  sidePanel: true
   presets: false          # Must be false — conflicts with modelSpecs.prioritize
   bookmarks: true
   multiConvo: true
@@ -287,7 +285,7 @@ modelSpecs:
           - Never use filler phrases or unnecessary caveats
           - If the user provides a draft, improve it — don't rewrite from scratch
           - For artifacts: use text/html for formatted documents, application/vnd.react for interactive editors
-        temperature: 0.7
+        temperature: 1
         maxOutputTokens: 16384
         maxContextTokens: 200000
         promptCache: true
@@ -381,7 +379,7 @@ modelSpecs:
           - Architecture diagrams → artifact type: application/vnd.mermaid | graph TD
           - Sequence diagrams for API flows → artifact type: application/vnd.mermaid | sequenceDiagram
           - ALWAYS write complete files, never use "// rest of code"
-        temperature: 0.3
+        temperature: 1
         maxOutputTokens: 16384
         maxContextTokens: 200000
         promptCache: true
