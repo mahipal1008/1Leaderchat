@@ -109,6 +109,8 @@ modelSpecs:
       showIconInMenu: true
       artifacts: true
       webSearch: true
+      executeCode: true
+      fileSearch: true
       preset:
         endpoint: "bedrock"
         model: "us.anthropic.claude-sonnet-4-6"
@@ -133,6 +135,8 @@ modelSpecs:
       showIconInMenu: true
       artifacts: true
       webSearch: true
+      executeCode: true
+      fileSearch: true
       preset:
         endpoint: "bedrock"
         model: "us.anthropic.claude-sonnet-4-6"
@@ -154,6 +158,8 @@ modelSpecs:
       showIconInMenu: true
       artifacts: true
       webSearch: true
+      executeCode: true
+      fileSearch: true
       preset:
         endpoint: "bedrock"
         model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
