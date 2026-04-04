@@ -1,0 +1,75 @@
+version: 1.2.1
+cache: true
+
+interface:
+  endpointsMenu: true
+  modelSelect: true
+  parameters: true
+  sidePanel: true
+  presets: true
+  prompts: true
+  bookmarks: true
+  multiConvo: true
+  agents: true
+
+registration:
+  socialLogins: []
+  allowedDomains: []
+
+speech:
+  tts:
+    openai:
+      url: ''
+      apiKey: ''
+      model: ''
+      voices: []
+  stt:
+    openai:
+      url: ''
+      apiKey: ''
+      model: ''
+
+rateLimits:
+  fileUploads:
+    ipMax: 100
+    ipWindowInMinutes: 60
+    userMax: 50
+    userWindowInMinutes: 60
+  conversationsImport:
+    ipMax: 100
+    ipWindowInMinutes: 60
+    userMax: 50
+    userWindowInMinutes: 60
+
+endpoints:
+  bedrock:
+    availableRegions:
+      - us-east-1
+    streamRate: 28
+    titleModel: "us.anthropic.claude-sonnet-4-20250514-v1:0"
+    plugins: true
+
+mcpServers: {}
+
+actions:
+  allowedDomains: []
+  fileStrategy: "local"
+
+fileConfig:
+  endpoints:
+    bedrock:
+      fileLimit: 10
+      fileSizeLimit: 25
+      supportedMimeTypes:
+        - "image/jpeg"
+        - "image/png"
+        - "image/gif"
+        - "image/webp"
+        - "application/pdf"
+        - "text/plain"
+        - "text/markdown"
+        - "text/csv"
+        - "application/json"
+        - "text/html"
+        - "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
