@@ -16,19 +16,6 @@ registration:
   socialLogins: []
   allowedDomains: []
 
-speech:
-  tts:
-    openai:
-      url: ''
-      apiKey: ''
-      model: ''
-      voices: []
-  stt:
-    openai:
-      url: ''
-      apiKey: ''
-      model: ''
-
 rateLimits:
   fileUploads:
     ipMax: 100
@@ -41,14 +28,39 @@ rateLimits:
     userMax: 50
     userWindowInMinutes: 60
 
+# ─── AWS Bedrock Endpoint (Latest Models) ───
 endpoints:
   bedrock:
+    enabled: true
     availableRegions:
       - us-east-1
-    streamRate: 28
+      - us-west-2
+    streamRate: 35
     titleModel: "us.anthropic.claude-sonnet-4-20250514-v1:0"
     plugins: true
 
+# ─── Memory (Cross-Conversation Persistence) ───
+memory:
+  enabled: true
+  tokenLimit: 2000
+  messageWindowSize: 10
+
+# ─── Web Search (Serper.dev + Cohere Rerank via Bedrock) ───
+webSearch:
+  searchProvider: serper
+  reranker:
+    provider: cohere
+    model: rerank-english-v3.0
+
+# ─── Artifacts (SVG, HTML, React, Mermaid, Charts, etc.) ───
+artifacts:
+  enabled: true
+
+# ─── Code Interpreter ───
+codeInterpreter:
+  enabled: true
+
+# ─── MCP Servers (expandable) ───
 mcpServers: {}
 
 actions:
