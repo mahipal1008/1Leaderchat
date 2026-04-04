@@ -9,6 +9,10 @@ COPY --chown=node:node librechat.yaml /app/librechat.yaml
 # This sed patch increases the timeout to 30 seconds.
 RUN sed -i 's/timeoutMs = 3000/timeoutMs = 30000/g' /app/api/server/controllers/agents/client.js 2>/dev/null || true
 
+# ── Upgrade AWS SDK for Bedrock API Key support ──
+# Bedrock API Keys (BedrockAPIKey-*) require SDK 3.1000+ for proper SigV4 handling
+RUN cd /app && npm install @aws-sdk/client-bedrock-runtime@latest --save 2>/dev/null || true
+
 # Render expects the app to listen on port 10000
 ENV PORT=10000
 ENV HOST=0.0.0.0
