@@ -214,7 +214,7 @@ modelSpecs:
         model: "us.anthropic.claude-sonnet-4-6"
         modelLabel: "Claude Sonnet 4.6 Fast"
         greeting: "I'm Sonnet 4.6 in fast mode — no thinking overhead, instant responses. Great for quick questions, translations, and simple tasks."
-        temperature: 0.5
+        temperature: 1
         maxOutputTokens: 8192
         maxContextTokens: 200000
         promptCache: true
@@ -237,7 +237,7 @@ modelSpecs:
         model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
         modelLabel: "Claude Haiku 4.5"
         greeting: "I'm Haiku 4.5 — the fastest model. Best for quick answers, brainstorming, translations, and simple tasks at the lowest cost."
-        temperature: 0.5
+        temperature: 1
         maxOutputTokens: 4096
         maxContextTokens: 200000
         promptCache: true
