@@ -48,16 +48,17 @@ endpoints:
       - us-west-2
     streamRate: 35
     titleModel: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
+    plugins: true
 
 # ─── Memory (Cross-Conversation Persistence) ───
 memory:
   enabled: true
 
-# ─── Web Search (Serper.dev + Firecrawl Scraper) ───
+# ─── Web Search (Serper.dev + Cohere Reranker) ───
 webSearch:
   searchProvider: serper
-  scraperProvider: firecrawl
-  firecrawlApiUrl: "http://librechat-firecrawl:10000"
+  cohereApiKey: "${COHERE_API_KEY}"
+  rerankerType: cohere
 
 mcpServers: {}
 
