@@ -11,6 +11,8 @@ interface:
   bookmarks: true
   multiConvo: true
   agents: true
+  runCode: true
+  webSearch: true
 
 registration:
   socialLogins: []
@@ -28,19 +30,15 @@ rateLimits:
     userMax: 50
     userWindowInMinutes: 60
 
-# ─── AWS Bedrock Endpoint (Latest Models — April 2026) ───
+# ─── AWS Bedrock Endpoint ───
 endpoints:
   bedrock:
     models:
-      # Latest Claude 4.6 family (most capable)
       - "us.anthropic.claude-opus-4-6-v1"
       - "us.anthropic.claude-sonnet-4-6"
-      # Claude 4.0 family
       - "us.anthropic.claude-opus-4-20250514-v1:0"
       - "us.anthropic.claude-sonnet-4-20250514-v1:0"
-      # Claude 4.5 Haiku (fastest, cheapest)
       - "us.anthropic.claude-haiku-4-5-20251001-v1:0"
-      # Claude 3.5 legacy
       - "us.anthropic.claude-3-5-sonnet-20241022-v2:0"
       - "us.anthropic.claude-3-5-haiku-20241022-v1:0"
     availableRegions:
@@ -50,15 +48,115 @@ endpoints:
     titleModel: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     plugins: true
 
+# ─── Model Specs (Claude.ai-like experience) ───
+modelSpecs:
+  enforce: false
+  prioritize: true
+  list:
+    # ── Claude Opus 4.6 — Most Capable + Thinking ──
+    - name: "opus-4-6-thinking"
+      label: "Claude Opus 4.6"
+      default: true
+      description: "Most capable model with deep reasoning, artifacts, and web search"
+      iconURL: "anthropic"
+      showIconInHeader: true
+      showIconInMenu: true
+      artifacts: true
+      webSearch: true
+      executeCode: true
+      fileSearch: true
+      preset:
+        endpoint: "bedrock"
+        model: "us.anthropic.claude-opus-4-6-v1"
+        modelLabel: "Claude Opus 4.6"
+        greeting: "Hi, I'm Claude Opus 4.6 — the most capable model. I can reason deeply, generate artifacts (diagrams, charts, code, SVGs), search the web, and handle complex tasks."
+        temperature: 0.7
+        maxOutputTokens: 16384
+        thinking: true
+        thinkingBudget: 10000
+
+    # ── Claude Sonnet 4.6 — Fast + Smart + Thinking ──
+    - name: "sonnet-4-6-thinking"
+      label: "Claude Sonnet 4.6"
+      description: "Fast and smart with thinking mode — great daily driver"
+      iconURL: "anthropic"
+      showIconInHeader: true
+      showIconInMenu: true
+      artifacts: true
+      webSearch: true
+      executeCode: true
+      fileSearch: true
+      preset:
+        endpoint: "bedrock"
+        model: "us.anthropic.claude-sonnet-4-6"
+        modelLabel: "Claude Sonnet 4.6"
+        greeting: "Hi, I'm Claude Sonnet 4.6 — fast, smart, with reasoning. Perfect for coding, writing, and analysis."
+        temperature: 0.7
+        maxOutputTokens: 16384
+        thinking: true
+        thinkingBudget: 8000
+
+    # ── Claude Sonnet 4.6 — No Thinking (faster) ──
+    - name: "sonnet-4-6-fast"
+      label: "Claude Sonnet 4.6 (Fast)"
+      description: "Sonnet without thinking mode — fastest responses"
+      iconURL: "anthropic"
+      showIconInMenu: true
+      artifacts: true
+      webSearch: true
+      executeCode: true
+      preset:
+        endpoint: "bedrock"
+        model: "us.anthropic.claude-sonnet-4-6"
+        modelLabel: "Claude Sonnet 4.6 Fast"
+        temperature: 0.5
+        maxOutputTokens: 8192
+        thinking: false
+
+    # ── Claude Haiku 4.5 — Instant ──
+    - name: "haiku-4-5"
+      label: "Claude Haiku 4.5"
+      description: "Fastest and cheapest — instant responses"
+      group: "Fast"
+      iconURL: "anthropic"
+      showIconInMenu: true
+      artifacts: true
+      preset:
+        endpoint: "bedrock"
+        model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
+        modelLabel: "Claude Haiku 4.5"
+        temperature: 0.5
+        maxOutputTokens: 4096
+        thinking: false
+
+    # ── Claude Opus 4.6 — Max Thinking (research) ──
+    - name: "opus-4-6-research"
+      label: "Claude Opus 4.6 (Research)"
+      description: "Maximum reasoning budget for complex analysis and research"
+      group: "Research"
+      iconURL: "anthropic"
+      showIconInMenu: true
+      artifacts: true
+      webSearch: true
+      fileSearch: true
+      preset:
+        endpoint: "bedrock"
+        model: "us.anthropic.claude-opus-4-6-v1"
+        modelLabel: "Claude Opus 4.6 Research"
+        promptPrefix: "You are an expert research assistant. Think deeply, cite sources, and provide comprehensive analysis."
+        temperature: 0.3
+        maxOutputTokens: 32000
+        thinking: true
+        thinkingBudget: 20000
+        effort: "max"
+
 # ─── Memory (Cross-Conversation Persistence) ───
 memory:
   enabled: true
 
-# ─── Web Search (Serper.dev + Cohere Reranker) ───
+# ─── Web Search (Serper.dev Google Search) ───
 webSearch:
   searchProvider: serper
-  cohereApiKey: "${COHERE_API_KEY}"
-  rerankerType: cohere
 
 mcpServers: {}
 
