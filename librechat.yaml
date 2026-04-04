@@ -399,11 +399,9 @@ modelSpecs:
         imageDetail: "high"
 
 # ─── Memory System ───
-# FIXED: Switched from Bedrock → Anthropic direct API.
-# Bedrock has a structural bug: memory agent sends system message first,
-# but Bedrock Converse API requires user message first (GitHub #11344).
-# Anthropic direct API works correctly. Requires ANTHROPIC_API_KEY env var.
-# Cost: Haiku = $0.80/M input tokens → ~$0.10-0.50/month for personal use.
+# Using Bedrock + 30s timeout patch (Dockerfile sed).
+# PR #11353 fixed the Bedrock system-message-first bug in the latest image.
+# If memory still fails, switch to provider: "anthropic" + add ANTHROPIC_API_KEY.
 memory:
   disabled: false
   personalize: true
@@ -420,8 +418,8 @@ memory:
     - "goals"
     - "location"
   agent:
-    provider: "anthropic"
-    model: "claude-haiku-4-5-20251001"
+    provider: "bedrock"
+    model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     instructions: |
       You are a memory management assistant. Analyze conversations and manage
       the user's memory store using set_memory and delete_memory tools.
