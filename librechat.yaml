@@ -340,9 +340,11 @@ modelSpecs:
         imageDetail: "high"
 
 # ─── Memory System ───
-# Timeout patched from 3s → 30s in Dockerfile for Bedrock compatibility.
-# Bedrock memory bug (GitHub #11344) was fixed in PR #11353 (in latest image).
-# If memory still fails, switch provider to "anthropic" + add ANTHROPIC_API_KEY env var.
+# FIXED: Switched from Bedrock → Anthropic direct API.
+# Bedrock has a structural bug: memory agent sends system message first,
+# but Bedrock Converse API requires user message first (GitHub #11344).
+# Anthropic direct API works correctly. Requires ANTHROPIC_API_KEY env var.
+# Cost: Haiku = $0.80/M input tokens → ~$0.10-0.50/month for personal use.
 memory:
   disabled: false
   personalize: true
@@ -359,8 +361,8 @@ memory:
     - "goals"
     - "location"
   agent:
-    provider: "bedrock"
-    model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
+    provider: "anthropic"
+    model: "claude-haiku-4-5-20251001"
     instructions: |
       You are a memory management assistant. Analyze conversations and manage
       the user's memory store using set_memory and delete_memory tools.
