@@ -1,7 +1,7 @@
 version: 1.3.6
 cache: true
 
-# ─── Interface — All UI Features Enabled ───
+# ─── Interface — All UI Features Enabled (Claude.ai parity) ───
 interface:
   endpointsMenu: true
   modelSelect: true
@@ -40,6 +40,10 @@ rateLimits:
     ipWindowInMinutes: 60
     userMax: 50
     userWindowInMinutes: 60
+
+# ─── Conversation Settings ───
+conversationSettings:
+  maxConvoTitleLength: 80
 
 # ─── Endpoints ───
 endpoints:
@@ -194,6 +198,9 @@ modelSpecs:
         imageDetail: "high"
 
 # ─── Memory System (Claude.ai-like) ───
+# Memory agent runs after each message, extracts facts, stores in MongoDB.
+# Stored memories are automatically injected into all future conversations.
+# Timeout patched from 3s → 30s in Dockerfile for Bedrock compatibility.
 memory:
   disabled: false
   personalize: true
@@ -203,29 +210,32 @@ memory:
   agent:
     provider: "bedrock"
     model: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
+    model_parameters:
+      max_tokens: 1024
     instructions: |
-      You are a memory management assistant. Your job is to analyze conversations and manage the user's memory store using the available tools (set_memory and delete_memory).
+      You are a memory management assistant. Analyze conversations and manage the user's memory store using set_memory and delete_memory tools.
 
-      WHEN TO STORE MEMORY:
-      1. When the user EXPLICITLY asks you to remember something ("Remember that...", "Don't forget...", "Store this...", "Note that...", "Keep in mind...")
-      2. When the user shares important personal facts: their name, role, location, preferences, projects, goals, or expertise
-      3. When the user corrects previous information ("Actually my name is...", "I changed jobs to...")
-      4. When the user states a strong preference about how they want to interact ("Always respond in English", "I prefer concise answers")
+      ALWAYS STORE when the user:
+      - Asks to remember something ("Remember...", "Don't forget...", "Note that...", "Keep in mind...")
+      - Shares personal facts: name, role, location, education, job, company, preferences, goals, expertise
+      - Mentions projects they're working on, tools they use, or tech stack
+      - Corrects previous info ("Actually my name is...", "I changed to...")
+      - States preferences ("Always respond in English", "I prefer concise answers")
+      - Shares context about their work, team, deadlines, or environment
 
-      WHEN TO DELETE MEMORY:
-      1. When the user explicitly asks to forget something
-      2. When the user corrects outdated information (delete the old entry, store the new one)
+      ALWAYS DELETE when:
+      - User explicitly asks to forget something
+      - User corrects outdated info (delete old → store new)
 
-      WHEN NOT TO STORE:
-      1. Casual conversation that doesn't reveal lasting facts
-      2. Temporary task-specific details
-      3. Information already stored in memory
+      DO NOT STORE:
+      - Casual greetings or small talk
+      - Temporary task details (one-time questions)
+      - Info already in memory (check existing memories first)
 
-      MEMORY KEY NAMING:
-      - Use lowercase with underscores: user_name, user_role, user_location, project_dinesync, preference_language
-      - Be specific: "project_educard" not just "project"
+      KEY NAMING: lowercase_with_underscores, be specific:
+      user_name, user_role, user_location, user_education, project_dinesync, preference_language, tech_stack
 
-      IMPORTANT: After analyzing the messages, if there IS something to remember, call set_memory immediately. If there is NOTHING to remember, end your turn without calling any tools. Do NOT explain your reasoning — just act.
+      CRITICAL: If there IS something to remember, call set_memory IMMEDIATELY. If nothing to remember, end without calling tools. Never explain your reasoning.
 
 # ─── Web Search (Serper.dev Google Search) ───
 webSearch:
