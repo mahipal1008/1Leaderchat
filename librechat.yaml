@@ -271,33 +271,21 @@ transactions:
   enabled: true
 
 # ─── MCP Servers — Connectors (Step 8) ───
-mcpServers:
-  gmail:
-    type: streamable-http
-    url: https://gmail.mcp.claude.com/mcp
-    serverInstructions: true
-
-  google-drive:
-    type: streamable-http
-    url: https://gdrive.mcp.claude.com/mcp
-    serverInstructions: true
-
-  notion:
-    type: streamable-http
-    url: https://mcp.notion.com/mcp
-    serverInstructions: true
-
-  github:
-    type: streamable-http
-    url: https://github.mcp.claude.com/mcp
-    serverInstructions: true
+# Add MCP servers here. Examples:
+#   notion:
+#     type: streamable-http
+#     url: https://mcp.notion.com/mcp
+#     serverInstructions: true
+#   github:
+#     command: npx
+#     args: ["-y", "@modelcontextprotocol/server-github"]
+#     env:
+#       GITHUB_PERSONAL_ACCESS_TOKEN: "${GITHUB_TOKEN}"
+mcpServers: {}
 
 mcpSettings:
   allowedDomains:
-    - "gmail.mcp.claude.com"
-    - "gdrive.mcp.claude.com"
     - "mcp.notion.com"
-    - "github.mcp.claude.com"
     - "*.anthropic.com"
 
 actions:
